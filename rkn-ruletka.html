@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>РКН Рулетка 2.0 — что заблокируем сегодня?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@400;500&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0e0e1a;
+    --surface: #16162a;
+    --surface2: #1e1e38;
+    --accent-yellow: #FFD700;
+    --accent-cyan: #00D4FF;
+    --text: #FFFFFF;
+    --text-muted: #A0A0B0;
+    --danger: #FF4466;
+    --success: #00FF88;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid #2a2a4a;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo svg { width: 36px; height: 36px; flex-shrink: 0; }
+
+  .logo-text {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--accent-yellow);
+    letter-spacing: 1px;
+    line-height: 1;
+  }
+
+  .logo-text span { color: var(--text-muted); font-size: 11px; display: block; letter-spacing: 2px; font-family: 'Montserrat', sans-serif; font-weight: 600; }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .btn-vpn-header {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    background: transparent;
+    border: 1.5px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    padding: 7px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+    white-space: nowrap;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  .btn-vpn-header:hover { background: var(--accent-cyan); color: #000; }
+
+  .balance-block {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 6px 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .balance-label { color: var(--text-muted); }
+
+  #balance-display {
+    color: var(--accent-yellow);
+    font-variant-numeric: tabular-nums;
+    min-width: 70px;
+    text-align: right;
+  }
+
+  .btn-withdraw {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    background: linear-gradient(135deg, var(--accent-yellow), #ffaa00);
+    color: #000;
+    border: none;
+    padding: 7px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.2s;
+    min-height: 44px;
+    white-space: nowrap;
+  }
+
+  .btn-withdraw:hover { box-shadow: 0 0 16px rgba(255,215,0,0.5); transform: translateY(-1px); }
+  .btn-withdraw:active { transform: scale(0.96); }
+
+  /* ─── HERO ─── */
+  .hero {
+    text-align: center;
+    padding: 48px 24px 32px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 5vw, 48px);
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 60%, var(--accent-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+  }
+
+  .hero p {
+    color: var(--text-muted);
+    font-size: 17px;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  /* ─── DAILY BONUS ─── */
+  .daily-bonus {
+    max-width: 900px;
+    margin: 0 auto 24px;
+    padding: 0 24px;
+  }
+
+  .daily-bonus-inner {
+    background: linear-gradient(135deg, #1a2a1a, #1e2e10);
+    border: 1.5px solid #3a6a1a;
+    border-radius: 12px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .daily-bonus-text { font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 15px; }
+  .daily-bonus-text span { color: var(--success); }
+
+  .btn-claim-bonus {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    background: linear-gradient(135deg, #3a9a1a, #5aaa2a);
+    color: #fff;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    min-height: 44px;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .btn-claim-bonus:hover { opacity: 0.9; transform: translateY(-1px); }
+  .btn-claim-bonus:disabled { opacity: 0.5; cursor: default; }
+
+  /* ─── COUNTER ─── */
+  .spin-counter {
+    text-align: center;
+    margin-bottom: 16px;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .spin-counter strong { color: var(--danger); font-variant-numeric: tabular-nums; }
+
+  /* ─── ROULETTE CONTAINER ─── */
+  .roulette-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px 32px;
+  }
+
+  .roulette-wrapper {
+    position: relative;
+    background: var(--surface);
+    border-radius: 20px;
+    padding: 32px 0;
+    overflow: hidden;
+    border: 1px solid #2a2a4a;
+  }
+
+  /* Top and bottom pointer triangles */
+  .pointer-top, .pointer-bottom {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .pointer-top {
+    top: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 18px solid var(--accent-yellow);
+    filter: drop-shadow(0 0 6px var(--accent-yellow));
+  }
+
+  .pointer-bottom {
+    bottom: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-bottom: 18px solid var(--accent-yellow);
+    filter: drop-shadow(0 0 6px var(--accent-yellow));
+  }
+
+  /* Center highlight overlay */
+  .center-highlight {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 100%;
+    border-left: 2px solid rgba(255,215,0,0.4);
+    border-right: 2px solid rgba(255,215,0,0.4);
+    pointer-events: none;
+    z-index: 5;
+  }
+
+  /* Fade edges */
+  .roulette-wrapper::before, .roulette-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 140px;
+    height: 100%;
+    z-index: 6;
+    pointer-events: none;
+  }
+
+  .roulette-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, var(--surface) 20%, transparent);
+  }
+
+  .roulette-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, var(--surface) 20%, transparent);
+  }
+
+  .roulette-track-outer {
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .roulette-track {
+    display: flex;
+    align-items: center;
+    will-change: transform;
+  }
+
+  .slot {
+    flex-shrink: 0;
+    width: 120px;
+    height: 120px;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    background: var(--surface2);
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    position: relative;
+    user-select: none;
+  }
+
+  .slot img, .slot svg.service-icon {
+    width: 52px;
+    height: 52px;
+    object-fit: contain;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .slot-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+    letter-spacing: 0.5px;
+  }
+
+  .slot.active {
+    border-color: var(--accent-yellow);
+    background: #1e1e10;
+    animation: pulse-glow 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 10px rgba(255,215,0,0.4); }
+    50% { box-shadow: 0 0 24px rgba(255,215,0,0.8), 0 0 40px rgba(255,215,0,0.3); }
+  }
+
+  /* ─── SPIN BUTTON ─── */
+  .spin-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding: 0 24px;
+  }
+
+  .btn-spin {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: 3px;
+    background: linear-gradient(135deg, var(--accent-yellow), #ffaa00);
+    color: #000;
+    border: none;
+    padding: 18px 64px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.2s, opacity 0.2s;
+    min-height: 64px;
+    min-width: 260px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-spin::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    border-radius: inherit;
+  }
+
+  .btn-spin:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px rgba(255,215,0,0.5);
+  }
+
+  .btn-spin:active:not(:disabled) { transform: scale(0.95); }
+
+  .btn-spin:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .last-win {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+    min-height: 20px;
+    transition: all 0.3s;
+  }
+
+  .last-win.win-flash { color: var(--accent-yellow); font-weight: 700; }
+
+  /* ─── VPN BLOCK ─── */
+  .vpn-section {
+    max-width: 900px;
+    margin: 0 auto 32px;
+    padding: 0 24px;
+  }
+
+  .vpn-block {
+    background: linear-gradient(135deg, #0a1e2a, #0d2535);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 20px;
+    padding: 28px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+    box-shadow: 0 0 30px rgba(0,212,255,0.1);
+  }
+
+  .vpn-text h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--accent-cyan);
+    margin-bottom: 4px;
+  }
+
+  .vpn-text p { color: var(--text-muted); font-size: 14px; }
+  .vpn-text p strong { color: var(--success); }
+
+  .vpn-shield {
+    font-size: 42px;
+    flex-shrink: 0;
+  }
+
+  .btn-vpn-connect {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    background: linear-gradient(135deg, var(--accent-cyan), #0090bb);
+    color: #000;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.2s;
+    min-height: 52px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .btn-vpn-connect:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,212,255,0.4); }
+  .btn-vpn-connect:active { transform: scale(0.96); }
+
+  /* ─── HISTORY ─── */
+  .history-section {
+    max-width: 900px;
+    margin: 0 auto 32px;
+    padding: 0 24px;
+  }
+
+  .section-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 10px;
+  }
+
+  .history-item {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideInDown 0.4s ease forwards;
+    opacity: 0;
+    border-left: 3px solid transparent;
+  }
+
+  .history-item.cat-jackpot { border-left-color: var(--accent-yellow); }
+  .history-item.cat-rare { border-left-color: #ff8800; }
+  .history-item.cat-medium { border-left-color: var(--accent-cyan); }
+  .history-item.cat-frequent { border-left-color: var(--text-muted); }
+  .history-item.cat-special { border-left-color: var(--danger); }
+
+  @keyframes slideInDown {
+    from { transform: translateY(-16px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .history-icon img, .history-icon svg { width: 28px; height: 28px; object-fit: contain; }
+  .history-name { font-family: 'Montserrat', sans-serif; font-weight: 600; flex: 1; font-size: 14px; }
+  .history-amount { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; color: var(--accent-yellow); font-variant-numeric: tabular-nums; }
+  .history-amount.special { color: var(--danger); }
+
+  /* ─── LEADERBOARD ─── */
+  .leaderboard-section {
+    max-width: 900px;
+    margin: 0 auto 32px;
+    padding: 0 24px;
+  }
+
+  .leaderboard-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .lb-row {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .lb-rank {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    width: 28px;
+    text-align: center;
+  }
+
+  .lb-rank.gold { color: var(--accent-yellow); }
+  .lb-rank.silver { color: #C0C0C0; }
+  .lb-rank.bronze { color: #CD7F32; }
+
+  .lb-name { flex: 1; font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 14px; }
+  .lb-amount { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 14px; color: var(--accent-yellow); font-variant-numeric: tabular-nums; }
+
+  /* ─── SHARE ─── */
+  .share-section {
+    max-width: 900px;
+    margin: 0 auto 32px;
+    padding: 0 24px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .btn-share {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s, transform 0.1s;
+  }
+
+  .btn-share:hover { opacity: 0.85; transform: translateY(-1px); }
+  .btn-share.vk { background: #4a76a8; color: #fff; }
+  .btn-share.tg { background: #2AABEE; color: #fff; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid #2a2a4a;
+    padding: 24px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+    line-height: 1.6;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* ─── OVERLAY ─── */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(14,14,26,0.92);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .overlay.visible { opacity: 1; pointer-events: all; }
+
+  .overlay-box {
+    background: var(--surface2);
+    border-radius: 24px;
+    padding: 40px 48px;
+    text-align: center;
+    max-width: 380px;
+    width: 90%;
+    border: 2px solid var(--accent-yellow);
+    box-shadow: 0 0 60px rgba(255,215,0,0.2);
+    animation: popIn 0.4s ease;
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .overlay-box.withdraw {
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 60px rgba(0,212,255,0.2);
+  }
+
+  .overlay-emoji { font-size: 64px; margin-bottom: 16px; line-height: 1; }
+
+  .overlay-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    margin-bottom: 8px;
+    color: var(--accent-yellow);
+  }
+
+  .overlay-box.withdraw .overlay-title { color: var(--accent-cyan); }
+
+  .overlay-msg { color: var(--text-muted); font-size: 15px; line-height: 1.5; }
+
+  .overlay-progress {
+    width: 100%;
+    height: 4px;
+    background: #2a2a4a;
+    border-radius: 2px;
+    margin-top: 20px;
+    overflow: hidden;
+  }
+
+  .overlay-progress-bar {
+    height: 100%;
+    background: var(--accent-cyan);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 1.5s linear;
+  }
+
+  /* ─── JACKPOT SPECIAL ─── */
+  .overlay-box.jackpot {
+    border-color: var(--accent-yellow);
+  }
+
+  .overlay-box.rkn {
+    border-color: var(--danger);
+    box-shadow: 0 0 60px rgba(255,68,102,0.2);
+  }
+
+  .overlay-box.rkn .overlay-title { color: var(--danger); }
+
+  /* ─── NAME MODAL ─── */
+  .name-modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(14,14,26,0.97);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+
+  .name-modal.visible { opacity: 1; pointer-events: all; }
+
+  .name-modal-box {
+    background: var(--surface2);
+    border: 2px solid var(--accent-yellow);
+    border-radius: 24px;
+    padding: 44px 48px;
+    text-align: center;
+    max-width: 400px;
+    width: 92%;
+    box-shadow: 0 0 80px rgba(255,215,0,0.15);
+    animation: popIn 0.5s ease;
+  }
+
+  .name-modal-emoji { font-size: 56px; margin-bottom: 16px; }
+
+  .name-modal-title {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--accent-yellow);
+    margin-bottom: 8px;
+  }
+
+  .name-modal-sub {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 28px;
+    line-height: 1.5;
+  }
+
+  .name-input-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+
+  .name-input {
+    width: 100%;
+    background: var(--surface);
+    border: 2px solid #2a2a4a;
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    text-align: center;
+  }
+
+  .name-input::placeholder { color: var(--text-muted); font-weight: 400; }
+
+  .name-input:focus {
+    border-color: var(--accent-yellow);
+    box-shadow: 0 0 16px rgba(255,215,0,0.2);
+  }
+
+  .name-input.error { border-color: var(--danger); animation: shake 0.3s ease; }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  .name-error {
+    color: var(--danger);
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: -8px;
+    margin-bottom: 12px;
+    min-height: 16px;
+  }
+
+  .btn-start-game {
+    width: 100%;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, var(--accent-yellow), #ffaa00);
+    color: #000;
+    border: none;
+    padding: 16px;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.2s;
+    min-height: 56px;
+  }
+
+  .btn-start-game:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,215,0,0.4); }
+  .btn-start-game:active { transform: scale(0.97); }
+
+  .btn-skip-name {
+    width: 100%;
+    margin-top: 10px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    transition: color 0.2s;
+  }
+
+  .btn-skip-name:hover { color: var(--text); }
+
+  /* ─── USER BADGE (в шапке) ─── */
+  .user-badge {
+    display: none;
+    align-items: center;
+    gap: 7px;
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 6px 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+    cursor: pointer;
+    border: 1px solid #2a2a4a;
+    transition: border-color 0.2s;
+    min-height: 44px;
+  }
+
+  .user-badge:hover { border-color: var(--accent-yellow); }
+  .user-badge.show { display: flex; }
+  .user-badge-avatar { font-size: 18px; }
+  .user-badge-name { max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+
+  /* ─── CANVAS (confetti) ─── */
+  #confetti-canvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 998;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    header { padding: 10px 16px; }
+    .logo-text { font-size: 18px; }
+    .hero { padding: 32px 16px 24px; }
+    .slot { width: 100px; height: 100px; margin: 0 6px; }
+    .slot img, .slot svg.service-icon { width: 40px; height: 40px; }
+    .center-highlight { width: 114px; }
+    .btn-spin { width: 100%; padding: 18px 24px; }
+    .vpn-block { padding: 20px 20px; }
+    .share-section { justify-content: center; }
+  }
+
+  @media (max-width: 480px) {
+    .slot { width: 90px; height: 90px; margin: 0 5px; }
+    .slot img, .slot svg.service-icon { width: 36px; height: 36px; }
+    .slot-name { font-size: 10px; }
+    .center-highlight { width: 100px; }
+    .btn-spin { font-size: 22px; }
+    .overlay-box { padding: 28px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<!-- ─── NAME MODAL ─── -->
+<div class="name-modal visible" id="name-modal" role="dialog" aria-modal="true" aria-label="Введите имя">
+  <div class="name-modal-box">
+    <div class="name-modal-emoji">🎰</div>
+    <div class="name-modal-title">Добро пожаловать!</div>
+    <div class="name-modal-sub">Введите имя, чтобы следить за своим балансом и попасть в таблицу лидеров</div>
+    <div class="name-input-wrap">
+      <input class="name-input" id="name-input" type="text" maxlength="24"
+             placeholder="Ваше имя или никнейм" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="name-error" id="name-error"></div>
+    <button class="btn-start-game" id="btn-start-game">НАЧАТЬ ИГРУ 🚀</button>
+    <button class="btn-skip-name" id="btn-skip-name">Пропустить</button>
+  </div>
+</div>
+
+<!-- ─── OVERLAY ─── -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true">
+  <div class="overlay-box" id="overlay-box">
+    <div class="overlay-emoji" id="overlay-emoji">🎉</div>
+    <div class="overlay-title" id="overlay-title">Заблокировано!</div>
+    <div class="overlay-msg" id="overlay-msg">Отличная работа, цифровой цензор!</div>
+    <div class="overlay-progress" id="overlay-progress" style="display:none">
+      <div class="overlay-progress-bar" id="overlay-progress-bar"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <a class="logo" href="#">
+    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="РКН Рулетка логотип">
+      <rect width="36" height="36" rx="8" fill="#FFD700"/>
+      <path d="M7 8h22v14a11 11 0 0 1-11 11A11 11 0 0 1 7 22V8Z" fill="#0e0e1a"/>
+      <path d="M18 12v8m0 0l-4-4m4 4l4-4" stroke="#FFD700" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="18" cy="20" r="2.5" fill="#FFD700"/>
+      <path d="M7 8h22" stroke="#FFD700" stroke-width="1.5"/>
+    </svg>
+    <div class="logo-text">
+      РКН РУЛЕТКА
+      <span>2.0</span>
+    </div>
+  </a>
+
+  <div class="header-right">
+    <div class="user-badge" id="user-badge" title="Сменить имя">
+      <span class="user-badge-avatar">👤</span>
+      <span class="user-badge-name" id="user-badge-name"></span>
+    </div>
+    <a class="btn-vpn-header" id="vpn-android-btn" href="#" target="_blank" rel="noopener">
+      🛡️ VPN для Android
+    </a>
+    <div class="balance-block">
+      <span class="balance-label">Баланс:</span>
+      <span id="balance-display">0 ₽</span>
+    </div>
+    <button class="btn-withdraw" id="withdraw-btn">ВЫВЕСТИ</button>
+  </div>
+</header>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <h1>РКН рулетка — что заблокируем сегодня</h1>
+  <p>Помоги Роскомнадзору и заработай на VPN</p>
+</div>
+
+<!-- ─── DAILY BONUS ─── -->
+<div class="daily-bonus">
+  <div class="daily-bonus-inner">
+    <div class="daily-bonus-text">🎁 Ежедневный бонус: <span>+500 ₽</span> за первый вход сегодня!</div>
+    <button class="btn-claim-bonus" id="claim-bonus-btn">Получить бонус</button>
+  </div>
+</div>
+
+<!-- ─── SPIN COUNTER ─── -->
+<div class="spin-counter">
+  Уже заблокировано: <strong id="total-blocked">0</strong> раз сегодня
+</div>
+
+<!-- ─── ROULETTE ─── -->
+<div class="roulette-section">
+  <div class="roulette-wrapper">
+    <div class="pointer-top"></div>
+    <div class="pointer-bottom"></div>
+    <div class="center-highlight"></div>
+    <div class="roulette-track-outer">
+      <div class="roulette-track" id="roulette-track"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── SPIN BUTTON ─── -->
+<div class="spin-section">
+  <button class="btn-spin" id="spin-btn">🎰 КРУТИТЬ</button>
+  <div class="last-win" id="last-win"></div>
+</div>
+
+<!-- ─── VPN BLOCK ─── -->
+<div class="vpn-section">
+  <div class="vpn-block">
+    <div class="vpn-shield">🛡️</div>
+    <div class="vpn-text">
+      <h3>Надёжный VPN без блокировок</h3>
+      <p>Доступ ко всем заблокированным сервисам · <strong>Бесплатный пробный период</strong></p>
+      <p style="margin-top:6px; font-size:13px;">Работает в России · Без логов · 5 устройств одновременно</p>
+    </div>
+    <a class="btn-vpn-connect" id="vpn-connect-btn" href="#" target="_blank" rel="noopener">
+      🔓 ПОДКЛЮЧИТЬ
+    </a>
+  </div>
+</div>
+
+<!-- ─── HISTORY ─── -->
+<div class="history-section">
+  <div class="section-title">Последние блокировки</div>
+  <div class="history-list" id="history-list"></div>
+</div>
+
+<!-- ─── LEADERBOARD ─── -->
+<div class="leaderboard-section">
+  <div class="section-title">🏆 Топ цензоров недели</div>
+  <div class="leaderboard-grid" id="leaderboard"></div>
+</div>
+
+<!-- ─── SHARE ─── -->
+<div class="share-section">
+  <button class="btn-share vk" id="share-vk">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14C20.67 22 22 20.67 22 15.07V8.93C22 3.33 20.67 2 15.07 2zm3.08 13.65h-1.67c-.63 0-.82-.5-1.95-1.63-1-.95-1.44-.47-1.44.63v1.48c0 .37-.11.59-1.05.59-1.55 0-3.26-.94-4.47-2.69-1.82-2.56-2.31-4.48-2.31-4.87 0-.24.09-.46.33-.46h1.67c.25 0 .34.11.43.37.48 1.38 1.28 2.59 1.61 2.59.12 0 .18-.06.18-.37V9.38c-.04-.74-.42-.8-.42-1.06 0-.13.1-.25.26-.25h2.63c.21 0 .28.11.28.34v3.12c0 .21.09.28.15.28.12 0 .22-.07.44-.29 1.36-1.52 2.33-3.86 2.33-3.86.06-.16.2-.31.44-.31h1.67c.5 0 .61.26.5.61-.21.97-2.28 3.91-2.28 3.91-.18.3-.24.43 0 .76.17.24.72.72 1.09 1.15.68.78 1.2 1.43 1.34 1.88.14.42-.09.63-.52.63z"/></svg>
+    Поделиться ВКонтакте
+  </button>
+  <button class="btn-share tg" id="share-tg">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8l-1.68 7.92c-.12.56-.46.7-.93.43l-2.58-1.9-1.24 1.2c-.14.13-.26.25-.53.25l.18-2.6 4.72-4.27c.2-.18-.04-.28-.32-.1l-5.83 3.67-2.51-.78c-.54-.17-.55-.54.12-.8l9.8-3.77c.45-.17.84.11.8.75z"/></svg>
+    Поделиться в Telegram
+  </button>
+</div>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <p>Это игровой развлекательный проект. Виртуальная валюта не имеет реальной стоимости и не может быть обменяна на деньги или товары.</p>
+  <p style="margin-top:8px; font-size:12px;">Все названия сервисов и торговые марки принадлежат их владельцам. Проект создан в юмористических целях.</p>
+</footer>
+
+<script type="module">
+// ─── CONFIG ───────────────────────────────────────────────────────────────────
+const VPN_LINK = 'https://tuvp1.ru/nQNTh5?sub1=rkn-rulette';
+
+const SERVICES = [
+  { id: 'youtube',   name: 'YouTube',       color: 'FF0000', cat: 'rare',     minPrize: 45_000,  maxPrize: 120_000 },
+  { id: 'instagram', name: 'Instagram',     color: 'E4405F', cat: 'frequent', minPrize: 8_000,   maxPrize: 35_000  },
+  { id: 'x',         name: 'Twitter / X',   color: 'FFFFFF', cat: 'frequent', minPrize: 7_000,   maxPrize: 30_000  },
+  { id: 'tiktok',    name: 'TikTok',        color: 'FFFFFF', cat: 'frequent', minPrize: 6_000,   maxPrize: 28_000  },
+  { id: 'netflix',   name: 'Netflix',       color: 'E50914', cat: 'rare',     minPrize: 50_000,  maxPrize: 150_000 },
+  { id: 'spotify',   name: 'Spotify',       color: '1DB954', cat: 'medium',   minPrize: 18_000,  maxPrize: 65_000  },
+  { id: 'wikipedia', name: 'Wikipedia',     color: 'FFFFFF', cat: 'medium',   minPrize: 15_000,  maxPrize: 55_000  },
+  { id: 'telegram',  name: 'Telegram',      color: '26A5E4', cat: 'jackpot',  minPrize: 200_000, maxPrize: 750_000 },
+  { id: 'whatsapp',  name: 'WhatsApp',      color: '25D366', cat: 'medium',   minPrize: 20_000,  maxPrize: 70_000  },
+  { id: 'reddit',    name: 'Reddit',        color: 'FF4500', cat: 'medium',   minPrize: 16_000,  maxPrize: 60_000  },
+  { id: 'google',    name: 'Google',        color: '4285F4', cat: 'jackpot',  minPrize: 300_000, maxPrize: 999_000 },
+  { id: 'discord',   name: 'Discord',       color: '5865F2', cat: 'medium',   minPrize: 14_000,  maxPrize: 58_000  },
+  { id: 'vk',        name: 'ВКонтакте',     color: '0077FF', cat: 'frequent', minPrize: 5_000,   maxPrize: 25_000  },
+  { id: 'twitch',    name: 'Twitch',        color: '9146FF', cat: 'medium',   minPrize: 17_000,  maxPrize: 62_000  },
+  { id: '__rkn__',   name: 'Роскомнадзор',  color: 'FF4466', cat: 'special',  minPrize: 0,       maxPrize: 0       },
+];
+
+// Category weights (higher = more frequent)
+const CAT_WEIGHTS = { jackpot: 5, rare: 12, medium: 25, frequent: 40, special: 8 };
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let balance = 0;
+let isSpinning = false;
+let spinHistory = [];
+let totalBlocked = Math.floor(Math.random() * 3000) + 12000;
+let audioCtx = null;
+let userName = '';
+
+// ─── DOM ──────────────────────────────────────────────────────────────────────
+const track        = document.getElementById('roulette-track');
+const spinBtn      = document.getElementById('spin-btn');
+const balanceEl    = document.getElementById('balance-display');
+const lastWinEl    = document.getElementById('last-win');
+const historyEl    = document.getElementById('history-list');
+const totalBlockEl = document.getElementById('total-blocked');
+const overlay      = document.getElementById('overlay');
+const overlayBox   = document.getElementById('overlay-box');
+const overlayEmoji = document.getElementById('overlay-emoji');
+const overlayTitle = document.getElementById('overlay-title');
+const overlayMsg   = document.getElementById('overlay-msg');
+const overlayProg  = document.getElementById('overlay-progress');
+const overlayBar   = document.getElementById('overlay-progress-bar');
+const claimBonus   = document.getElementById('claim-bonus-btn');
+const withdrawBtn  = document.getElementById('withdraw-btn');
+const canvas       = document.getElementById('confetti-canvas');
+const ctx2d        = canvas.getContext('2d');
+
+// ─── NAME MODAL ───────────────────────────────────────────────────────────────
+const nameModal     = document.getElementById('name-modal');
+const nameInput     = document.getElementById('name-input');
+const nameError     = document.getElementById('name-error');
+const btnStartGame  = document.getElementById('btn-start-game');
+const userBadge     = document.getElementById('user-badge');
+const userBadgeName = document.getElementById('user-badge-name');
+
+function applyName(name) {
+  userName = name.trim();
+  userBadgeName.textContent = userName;
+  userBadge.classList.add('show');
+  nameModal.classList.remove('visible');
+  // заблокировать весь контент до ввода имени больше не нужно
+  spinBtn.disabled = false;
+}
+
+function openNameModal() {
+  nameInput.value = userName;
+  nameError.textContent = '';
+  nameModal.classList.add('visible');
+  setTimeout(() => nameInput.focus(), 300);
+}
+
+function submitName() {
+  const val = nameInput.value.trim();
+  if (!val) {
+    nameError.textContent = 'Введите имя — хотя бы один символ';
+    nameInput.classList.add('error');
+    setTimeout(() => nameInput.classList.remove('error'), 400);
+    return;
+  }
+  applyName(val);
+}
+
+btnStartGame.addEventListener('click', submitName);
+nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') submitName(); });
+document.getElementById('btn-skip-name').addEventListener('click', () => applyName('Аноним'));
+
+// Клик по бейджу в шапке — сменить имя
+userBadge.addEventListener('click', openNameModal);
+
+// При загрузке страницы заблокировать кнопку «Крутить» до ввода имени
+spinBtn.disabled = true;
+
+// ─── VPN LINKS ────────────────────────────────────────────────────────────────
+[...document.querySelectorAll('#vpn-android-btn, #vpn-connect-btn')].forEach(el => {
+  el.href = VPN_LINK;
+});
+withdrawBtn.addEventListener('click', () => triggerWithdraw());
+
+// ─── TOTAL BLOCKED COUNTER ────────────────────────────────────────────────────
+totalBlockEl.textContent = totalBlocked.toLocaleString('ru-RU');
+
+// ─── LEADERBOARD ──────────────────────────────────────────────────────────────
+const LB_DATA = [
+  { name: 'Цензор_Иван',       amount: 1_234_500 },
+  { name: 'РКН_Офицер_2077',   amount: 987_200   },
+  { name: 'Блокировщик_Петров', amount: 854_700   },
+  { name: 'GovAgent_X',        amount: 712_100   },
+  { name: 'МедиаГвардия',      amount: 543_800   },
+];
+
+const LB_RANKS = ['🥇', '🥈', '🥉', '4', '5'];
+const LB_CLASSES = ['gold', 'silver', 'bronze', '', ''];
+
+const lbEl = document.getElementById('leaderboard');
+LB_DATA.forEach((row, i) => {
+  const div = document.createElement('div');
+  div.className = 'lb-row';
+  div.innerHTML = `
+    <div class="lb-rank ${LB_CLASSES[i]}">${LB_RANKS[i]}</div>
+    <div class="lb-name">${row.name}</div>
+    <div class="lb-amount">${row.amount.toLocaleString('ru-RU')} ₽</div>
+  `;
+  lbEl.appendChild(div);
+});
+
+// ─── ROULETTE TRACK BUILDER ───────────────────────────────────────────────────
+const SLOT_WIDTH = 140; // px (slot 120 + margin 2×10)
+
+function buildRknSvg() {
+  return `<svg class="service-icon" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg" aria-label="Роскомнадзор">
+    <path d="M26 4L6 14v12c0 11.05 8.56 21.4 20 23.93C37.44 47.4 46 37.05 46 26V14L26 4Z" fill="#FF4466" opacity="0.15"/>
+    <path d="M26 6L8 15.6V26c0 10.2 7.9 19.8 18 22.2 10.1-2.4 18-12 18-22.2V15.6L26 6Z" stroke="#FF4466" stroke-width="2" fill="none"/>
+    <text x="26" y="32" text-anchor="middle" font-family="Rajdhani,sans-serif" font-weight="700" font-size="13" fill="#FF4466">РКН</text>
+    <path d="M19 22h14M26 22v-6" stroke="#FF4466" stroke-width="2.2" stroke-linecap="round"/>
+  </svg>`;
+}
+
+function buildIconHtml(svc) {
+  if (svc.id === '__rkn__') return buildRknSvg();
+  return `<img src="https://cdn.simpleicons.org/${svc.id}/${svc.color}" alt="${svc.name}" width="52" height="52">`;
+}
+
+function randomService() {
+  return SERVICES[Math.floor(Math.random() * SERVICES.length)];
+}
+
+// Текущий сервис в центре (сохраняется между кручениями)
+let centerService = SERVICES[Math.floor(Math.random() * (SERVICES.length - 1))]; // не RKN при старте
+
+function buildAndRenderStrip(winner) {
+  // Полоса: [текущий центр, ~25 случайных, победитель, 4 хвостовых]
+  const BEFORE_WIN = 22 + Math.floor(Math.random() * 8); // 22–29 слотов до победителя
+  const strip = [centerService];
+  for (let i = 1; i < BEFORE_WIN; i++) strip.push(randomService());
+  strip.push(winner);
+  for (let i = 0; i < 4; i++) strip.push(randomService());
+
+  track.innerHTML = '';
+  strip.forEach(svc => {
+    const el = document.createElement('div');
+    el.className = 'slot';
+    el.dataset.id = svc.id;
+    el.innerHTML = buildIconHtml(svc) + `<div class="slot-name">${svc.name}</div>`;
+    track.appendChild(el);
+  });
+
+  return BEFORE_WIN; // индекс победителя в полосе
+}
+
+function slotCenterOffset(idx) {
+  const centerX = track.parentElement.offsetWidth / 2;
+  return -(idx * SLOT_WIDTH + SLOT_WIDTH / 2 - centerX);
+}
+
+// ─── НАЧАЛЬНЫЙ РЕНДЕР ────────────────────────────────────────────────────────
+(function initStrip() {
+  const display = [];
+  for (let i = 0; i < 9; i++) display.push(randomService());
+  display[4] = centerService;
+  track.innerHTML = '';
+  display.forEach(svc => {
+    const el = document.createElement('div');
+    el.className = 'slot';
+    el.dataset.id = svc.id;
+    el.innerHTML = buildIconHtml(svc) + `<div class="slot-name">${svc.name}</div>`;
+    track.appendChild(el);
+  });
+  track.style.transform = `translateX(${slotCenterOffset(4)}px)`;
+  track.querySelectorAll('.slot')[4].classList.add('active');
+})();
+
+// ─── AUDIO ────────────────────────────────────────────────────────────────────
+function initAudio() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+}
+
+function playTick() {
+  if (!audioCtx) return;
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.connect(gain); gain.connect(audioCtx.destination);
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+  gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+  osc.start(audioCtx.currentTime);
+  osc.stop(audioCtx.currentTime + 0.03);
+}
+
+function playSpinStart() {
+  if (!audioCtx) return;
+  const bufSize = audioCtx.sampleRate * 0.4;
+  const buf = audioCtx.createBuffer(1, bufSize, audioCtx.sampleRate);
+  const data = buf.getChannelData(0);
+  for (let i = 0; i < bufSize; i++) data[i] = (Math.random() * 2 - 1) * (i / bufSize);
+  const src = audioCtx.createBufferSource();
+  src.buffer = buf;
+  const gain = audioCtx.createGain();
+  gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+  src.connect(gain); gain.connect(audioCtx.destination);
+  src.start();
+}
+
+function playWin(type = 'normal') {
+  if (!audioCtx) return;
+  const now = audioCtx.currentTime;
+  const chords = {
+    normal:  [[523, 659, 784], [0, 0.05, 0.1]],
+    jackpot: [[523, 659, 784, 1047], [0, 0.08, 0.16, 0.24]],
+    rkn:     [[392, 370, 330, 294],  [0, 0.12, 0.24, 0.36]],
+  };
+  const [freqs, delays] = chords[type] || chords.normal;
+  freqs.forEach((f, i) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.type = type === 'rkn' ? 'sawtooth' : 'sine';
+    osc.frequency.setValueAtTime(f, now + delays[i]);
+    gain.gain.setValueAtTime(0.18, now + delays[i]);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + delays[i] + 0.6);
+    osc.start(now + delays[i]);
+    osc.stop(now + delays[i] + 0.6);
+  });
+}
+
+// ─── EASING ───────────────────────────────────────────────────────────────────
+function easeOutQuintic(t) { return 1 - Math.pow(1 - t, 5); }
+function easeOutCubic(t)   { return 1 - Math.pow(1 - t, 3); }
+
+// ─── WEIGHTED RANDOM ──────────────────────────────────────────────────────────
+function weightedRandom() {
+  const pool = [];
+  SERVICES.forEach(svc => {
+    const w = CAT_WEIGHTS[svc.cat] || 10;
+    for (let i = 0; i < w; i++) pool.push(svc);
+  });
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+// ─── BALANCE ──────────────────────────────────────────────────────────────────
+function formatMoney(n) { return n.toLocaleString('ru-RU') + ' ₽'; }
+
+function animateBalance(from, to, duration = 600) {
+  const start = performance.now();
+  function step(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const val = Math.round(from + (to - from) * easeOutCubic(t));
+    balanceEl.textContent = formatMoney(val);
+    if (t < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ─── HISTORY ──────────────────────────────────────────────────────────────────
+function addHistory(svc, prize) {
+  spinHistory.unshift({ svc, prize, by: userName });
+  if (spinHistory.length > 5) spinHistory.pop();
+
+  historyEl.innerHTML = '';
+  spinHistory.forEach(entry => {
+    const div = document.createElement('div');
+    div.className = `history-item cat-${entry.svc.cat}`;
+    const isSpecial = entry.svc.id === '__rkn__';
+    div.innerHTML = `
+      <div class="history-icon">${buildIconHtml(entry.svc)}</div>
+      <div class="history-name">
+        ${entry.svc.name}
+        ${entry.by ? `<span style="color:var(--text-muted);font-weight:400;font-size:11px;margin-left:6px;">— ${entry.by}</span>` : ''}
+      </div>
+      <div class="history-amount ${isSpecial ? 'special' : ''}">${isSpecial ? '×2 БАЛАНС' : '+' + formatMoney(entry.prize)}</div>
+    `;
+    historyEl.appendChild(div);
+  });
+}
+
+// ─── CONFETTI ─────────────────────────────────────────────────────────────────
+let confettiParticles = [];
+let confettiRunning = false;
+
+function spawnConfetti() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  confettiParticles = Array.from({ length: 120 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height - canvas.height,
+    r: Math.random() * 8 + 4,
+    d: Math.random() * 80 + 60,
+    color: ['#FFD700','#00D4FF','#FF4466','#00FF88','#FF8800'][Math.floor(Math.random()*5)],
+    tilt: Math.random() * 10 - 5,
+    tiltAngle: 0,
+    tiltSpeed: Math.random() * 0.15 + 0.05,
+    vy: Math.random() * 3 + 2,
+    vx: Math.random() * 2 - 1,
+    alpha: 1,
+  }));
+  if (!confettiRunning) runConfetti();
+}
+
+function runConfetti() {
+  confettiRunning = true;
+  ctx2d.clearRect(0, 0, canvas.width, canvas.height);
+  confettiParticles.forEach(p => {
+    p.tiltAngle += p.tiltSpeed;
+    p.y += p.vy;
+    p.x += p.vx;
+    p.tilt = Math.sin(p.tiltAngle) * 12;
+    if (p.y > canvas.height * 0.7) p.alpha -= 0.015;
+
+    ctx2d.save();
+    ctx2d.globalAlpha = Math.max(0, p.alpha);
+    ctx2d.fillStyle = p.color;
+    ctx2d.beginPath();
+    ctx2d.ellipse(p.x + p.tilt, p.y, p.r, p.r * 0.4, p.tiltAngle, 0, Math.PI * 2);
+    ctx2d.fill();
+    ctx2d.restore();
+  });
+  confettiParticles = confettiParticles.filter(p => p.alpha > 0);
+  if (confettiParticles.length > 0) {
+    requestAnimationFrame(runConfetti);
+  } else {
+    ctx2d.clearRect(0, 0, canvas.width, canvas.height);
+    confettiRunning = false;
+  }
+}
+
+// ─── OVERLAY HELPERS ──────────────────────────────────────────────────────────
+function showOverlay(emoji, title, msg, type = '', autoClose = 2200) {
+  overlayEmoji.textContent = emoji;
+  overlayTitle.textContent = title;
+  overlayMsg.textContent = msg;
+  overlayBox.className = 'overlay-box ' + type;
+  overlayProg.style.display = 'none';
+  overlay.classList.add('visible');
+
+  return new Promise(res => setTimeout(() => {
+    overlay.classList.remove('visible');
+    res();
+  }, autoClose));
+}
+
+function showWithdrawOverlay(amount) {
+  overlayEmoji.textContent = '💸';
+  overlayTitle.textContent = `Выводим ${formatMoney(amount)}...`;
+  overlayMsg.textContent = 'Перенаправляем на партнёрский VPN-сервис';
+  overlayBox.className = 'overlay-box withdraw';
+  overlayProg.style.display = 'block';
+  overlayBar.style.width = '0%';
+  overlay.classList.add('visible');
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => { overlayBar.style.width = '100%'; });
+  });
+
+  return new Promise(res => setTimeout(() => {
+    overlay.classList.remove('visible');
+    overlayBar.style.width = '0%';
+    res();
+  }, 1600));
+}
+
+// ─── WITHDRAW ─────────────────────────────────────────────────────────────────
+async function triggerWithdraw() {
+  if (isSpinning) return;
+  await showWithdrawOverlay(balance);
+  window.open(VPN_LINK, '_blank');
+}
+
+withdrawBtn.addEventListener('click', triggerWithdraw);
+
+// ─── DAILY BONUS ──────────────────────────────────────────────────────────────
+claimBonus.addEventListener('click', () => {
+  initAudio();
+  const bonus = 500;
+  const prev = balance;
+  balance += bonus;
+  animateBalance(prev, balance);
+  claimBonus.disabled = true;
+  claimBonus.textContent = 'Получено!';
+  playWin('normal');
+  lastWinEl.textContent = '🎁 Дневной бонус: +500 ₽ начислен!';
+  lastWinEl.className = 'last-win win-flash';
+});
+
+// ─── SPIN ─────────────────────────────────────────────────────────────────────
+spinBtn.addEventListener('click', () => {
+  if (isSpinning) return;
+  initAudio();
+  spin();
+});
+
+async function spin() {
+  isSpinning = true;
+  spinBtn.disabled = true;
+  lastWinEl.textContent = '';
+  lastWinEl.className = 'last-win';
+
+  const chosen = weightedRandom();
+
+  // Строим свежую полосу и рендерим её в DOM
+  const winnerIdx = buildAndRenderStrip(chosen);
+
+  // Стартовая позиция: slot[0] (= текущий centerService) по центру — без прыжка
+  const startOffset = slotCenterOffset(0);
+  const endOffset   = slotCenterOffset(winnerIdx);
+
+  // Мгновенно ставим в начало (reflow нужен, иначе браузер объединит с анимацией)
+  track.style.transform = `translateX(${startOffset}px)`;
+  void track.offsetHeight;
+
+  const duration = 3500;
+  const startTime = performance.now();
+  let lastTick = 0;
+  const totalDist = Math.abs(endOffset - startOffset);
+
+  playSpinStart();
+
+  await new Promise(resolve => {
+    function frame(now) {
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / duration, 1);
+      const eased = easeOutQuintic(t);
+      track.style.transform = `translateX(${startOffset + (endOffset - startOffset) * eased}px)`;
+
+      // Тик: интервал пропорционален скорости (быстро — часто, медленно — редко)
+      const speed = totalDist * (1 - eased);
+      const tickInterval = Math.max(50, 400 - speed * 0.12);
+      if (speed > 80 && now - lastTick > tickInterval) {
+        playTick();
+        lastTick = now;
+      }
+
+      if (t < 1) {
+        requestAnimationFrame(frame);
+      } else {
+        track.style.transform = `translateX(${endOffset}px)`;
+        resolve();
+      }
+    }
+    requestAnimationFrame(frame);
+  });
+
+  // Выделяем победителя и запоминаем его для следующего кручения
+  [...track.querySelectorAll('.slot')][winnerIdx].classList.add('active');
+  centerService = chosen;
+
+  // Начисляем приз
+  let prize = 0;
+  if (chosen.cat === 'special') {
+    const prev = balance;
+    balance = balance * 2 || 1000; // если 0 — даём 1000 чтобы не остаться с нулём
+    playWin('rkn');
+    animateBalance(prev, balance);
+    totalBlocked += 1;
+    totalBlockEl.textContent = totalBlocked.toLocaleString('ru-RU');
+    addHistory(chosen, 0);
+    lastWinEl.textContent = '😱 Самоблокировка! Баланс ×2!';
+    lastWinEl.className = 'last-win win-flash';
+    await showOverlay('🚫', 'Самоблокировка!', `Роскомнадзор заблокировал сам себя. Баланс удвоен! Новый баланс: ${formatMoney(balance)}`, 'rkn', 2800);
+  } else {
+    prize = Math.floor(Math.random() * (chosen.maxPrize - chosen.minPrize + 1)) + chosen.minPrize;
+    const isJackpot = chosen.cat === 'jackpot';
+    const prev = balance;
+    balance += prize;
+    animateBalance(prev, balance);
+    totalBlocked += 1;
+    totalBlockEl.textContent = totalBlocked.toLocaleString('ru-RU');
+    addHistory(chosen, prize);
+    lastWinEl.textContent = `${isJackpot ? '🔥 ДЖЕКПОТ!' : '✅'} ${chosen.name} заблокирован! +${formatMoney(prize)}`;
+    lastWinEl.className = 'last-win win-flash';
+
+    if (isJackpot) {
+      playWin('jackpot');
+      spawnConfetti();
+      await showOverlay('🔥', 'ДЖЕКПОТ!', `${chosen.name} заблокирован! Начислено ${formatMoney(prize)}`, 'jackpot', 2800);
+    } else {
+      playWin('normal');
+    }
+  }
+
+  isSpinning = false;
+  spinBtn.disabled = false;
+}
+
+// ─── SHARE ────────────────────────────────────────────────────────────────────
+document.getElementById('share-vk').addEventListener('click', () => {
+  const text = `Кручу рулетку РКН и зарабатываю! Уже ${formatMoney(balance)} 🎰`;
+  window.open(`https://vk.com/share.php?title=${encodeURIComponent(text)}&url=${encodeURIComponent(location.href)}`, '_blank');
+});
+
+document.getElementById('share-tg').addEventListener('click', () => {
+  const text = `Кручу рулетку РКН и зарабатываю! Уже ${formatMoney(balance)} 🎰`;
+  window.open(`https://t.me/share/url?url=${encodeURIComponent(location.href)}&text=${encodeURIComponent(text)}`, '_blank');
+});
+
+// ─── RESIZE canvas ────────────────────────────────────────────────────────────
+window.addEventListener('resize', () => {
+  if (!confettiRunning) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+});
+
+</script>
+</body>
+</html>
